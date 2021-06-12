@@ -1,0 +1,82 @@
+import pandas as pd 
+import numpy as np
+import seaborn as sns
+from matplotlib import pyplot as plt
+%matplotlib inline
+
+df=pd.read_csv("SampleSuperstore.csv")
+df.head()
+
+df.info()
+
+df.columns
+
+df.duplicated().sum()
+
+df.drop_duplicates(keep='first')
+df.shape
+(9994, 13)
+cor=df.corr()
+cor
+
+sns.heatmap(cor,annot=True)
+
+sns.pairplot(df,hue='Ship Mode')
+
+df['Ship Mode'].value_counts()
+
+sns.countplot(x=df['Ship Mode'])
+
+sns.pairplot(df,hue='Segment')
+
+df['Segment'].value_counts()
+
+sns.countplot(x=df['Segment'])
+
+sns.pairplot(df,hue='Category')
+
+df['Category'].value_counts()
+
+sns.countplot(x=df['Category'])
+
+sns.pairplot(df,hue='Sub-Category')
+
+df['Sub-Category'].value_counts()
+
+plt.figure(figsize=(5,8))
+df['Sub-Category'].value_counts().plot.pie()
+plt.show()
+
+df['State'].value_counts()
+
+plt.figure(figsize=(8,10))
+sns.countplot(x=df['State'])
+plt.xticks(rotation=90)
+plt.show()
+
+df['Region'].value_counts()
+
+plt.figure(figsize=(5,8))
+df['Region'].value_counts().plot.pie()
+plt.show()
+
+#Profit VS Sales
+plt.figure(figsize=(12,8))
+plt.scatter(df['Sales'],df['Profit'])
+plt.xlabel('Sales')
+plt.ylabel('Profit')
+plt.show()
+
+#Profit vs Discount
+sns.lineplot(x='Discount',y='Profit',data=df)
+plt.legend()
+plt.show()
+
+#Profit vs Quantity
+sns.lineplot(x='Quantity',y='Profit',data=df)
+plt.legend()
+plt.show()
+
+df.groupby('Region')[['Profit','Sales']].sum().plot.bar(color=['pink','skyblue'],figsize=(8,5))
+plt.ylabel('Profit\Loss & Sales')
+plt.show()
